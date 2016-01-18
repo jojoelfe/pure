@@ -2,7 +2,7 @@
 
 > Pretty, minimal and fast ZSH prompt
 
-![](screenshot.png)
+<img src="screenshot.png" width="550">
 
 
 ## Overview
@@ -101,6 +101,14 @@ Time in seconds to delay git dirty checking for large repositories (git status t
 
 Defines the prompt symbol. The default value is `❯`.
 
+### `PURE_GIT_DOWN_ARROW`
+
+Defines the git down arrow symbol. The default value is `⇣`.
+
+### `PURE_GIT_UP_ARROW`
+
+Defines the git up arrow symbol. The default value is `⇡`.
+
 ## Example
 
 ```sh
@@ -126,9 +134,10 @@ To have commands colorized as seen in the screenshot install [zsh-syntax-highlig
 
 ### [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
 
-1. Symlink (or copy) `pure.zsh` to `~/.oh-my-zsh/custom/pure.zsh-theme`
-2. Symlink (or copy) `async.zsh` to `~/.oh-my-zsh/custom/async.zsh`
-3. Add `ZSH_THEME="pure"` to your `.zshrc` file.
+1. Remove competing theme included in oh-my-zsh `~/.oh-my-zsh/themes/pure.zsh-theme`
+2. Symlink (or copy) `pure.zsh` to `~/.oh-my-zsh/custom/pure.zsh-theme`
+3. Symlink (or copy) `async.zsh` to `~/.oh-my-zsh/custom/async.zsh`
+4. Add `ZSH_THEME="pure"` to your `.zshrc` file.
 
 ### [prezto](https://github.com/sorin-ionescu/prezto)
 
@@ -143,7 +152,22 @@ antigen bundle mafredri/zsh-async
 antigen bundle sindresorhus/pure
 ```
 
+### [antibody](https://github.com/getantibody/antibody)
+
+Update your `.zshrc` file with the following two lines (order matters):
+
+```
+antibody bundle mafredri/zsh-async
+antibody bundle sindresorhus/pure
+```
+
 ## FAQ
+
+### My preprompt is missing when I clear the screen with Ctrl+L
+
+Pure doesn't register its custom *clear-screen* widget if it has been previously modified. If you haven't registered your own zle widget with `zle -N clear-screen custom-clear-screen` it might have been done by third-party modules. For example `zsh-syntax-highlighting` and `zsh-history-substring-search` are known to do this and they should for that reason be **the very last thing** in your `.zshrc` (as pointed out in their documentation).
+
+To find out the culprit that is overriding your *clear-screen* widget, you can run the following command: `zle -l | grep clear-screen`.
 
 ### I am stuck in a shell loop in my terminal that ask me to authenticate. What should I do ?
 
